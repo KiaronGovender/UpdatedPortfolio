@@ -14,7 +14,7 @@ export function Hero() {
             animate={{ opacity: 1, x: 0 }}
             className="tag mb-8 inline-block w-fit text-[var(--color-muted)]"
           >
-            Software Engineer · Cape Town
+            Software Engineer
           </motion.p>
 
           <motion.h1
