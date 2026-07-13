@@ -15,7 +15,7 @@ export function Contact() {
 
     try {
       const response = await fetch(
-        "https://formsubmit.co/ajax/kiagov02@gmail.com",
+        "https://formsubmit.co/ajax/kiagov01@gmail.com",
         {
           method: "POST",
           body: formData,
@@ -27,7 +27,7 @@ export function Contact() {
 
       const data = await response.json();
 
-      if (data.success) {
+      if (data.success === "true") {
         toast.success("Message sent successfully!");
         form.reset();
       } else {
