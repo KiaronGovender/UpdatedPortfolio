@@ -1,41 +1,32 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import emailjs from "@emailjs/browser";
 
 export function Contact() {
   const [loading, setLoading] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!formRef.current) return;
+
     setLoading(true);
 
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-
     try {
-      const response = await fetch(
-        "https://formsubmit.co/ajax/kiagov01@gmail.com",
-        {
-          method: "POST",
-          body: formData,
-          headers: {
-            Accept: "application/json",
-          },
-        },
+      await emailjs.sendForm(
+        "service_k71mcbn",
+        "template_r6ng9ef",
+        formRef.current,
+        "AP3HUGGHorZ_ZsU26",
       );
 
-      const data = await response.json();
-
-      if (data.success === "true") {
-        toast.success("Message sent successfully!");
-        form.reset();
-      } else {
-        toast.error("Unable to send your message.");
-      }
+      toast.success("Message sent successfully!");
+      formRef.current.reset();
     } catch (error) {
       console.error(error);
-      toast.error("Something went wrong. Please try again.");
+      toast.error("Unable to send your message.");
     } finally {
       setLoading(false);
     }
@@ -106,16 +97,9 @@ export function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="brutal-border brutal-shadow bg-white p-8"
+            ref={formRef}
             onSubmit={handleSubmit}
           >
-            {/* Optional FormSubmit settings */}
-            <input
-              type="hidden"
-              name="_subject"
-              value="New Portfolio Contact"
-            />
-            <input type="hidden" name="_captcha" value="false" />
-
             <div className="space-y-5">
               {[
                 { id: "name", label: "Name", type: "text" },
