@@ -1,10 +1,51 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 export function Contact() {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(
+        "https://formsubmit.co/ajax/kiagov02@gmail.com",
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+          },
+        },
+      );
+
+      const data = await response.json();
+
+      if (data.success === "true") {
+        toast.success("Message sent successfully!");
+        form.reset();
+      } else {
+        toast.error("Unable to send your message.");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section id="contact" className="section-cream px-4 py-28 md:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-16 lg:grid-cols-2">
+          {/* Left Side */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -13,6 +54,7 @@ export function Contact() {
             <p className="tag mb-6 inline-block text-[var(--color-muted)]">
               Contact
             </p>
+
             <h2 className="headline-xl text-5xl md:text-6xl">
               Let&apos;s
               <br />
@@ -20,6 +62,7 @@ export function Contact() {
                 talk
               </span>
             </h2>
+
             <p className="mt-6 max-w-md text-lg text-[var(--color-muted)]">
               Open to software engineering roles. Happy to walk through any
               project architecture or demo a Docker deployment live.
@@ -32,18 +75,21 @@ export function Contact() {
               >
                 kiagov02@gmail.com
               </a>
+
               <p className="text-[var(--color-muted)]">South Africa</p>
+
               <div className="flex gap-4 pt-2">
                 <a
-                  href="https://github.com/yourusername"
+                  href="https://github.com/KiaronGovender"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="tag transition hover:bg-[var(--color-ink)] hover:text-[var(--color-paper)]"
                 >
                   GitHub
                 </a>
+
                 <a
-                  href="https://linkedin.com/in/yourprofile"
+                  href="https://www.linkedin.com/in/kiarongovender/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="tag transition hover:bg-[var(--color-ink)] hover:text-[var(--color-paper)]"
@@ -54,13 +100,22 @@ export function Contact() {
             </div>
           </motion.div>
 
+          {/* Contact Form */}
           <motion.form
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="brutal-border brutal-shadow bg-white p-8"
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleSubmit}
           >
+            {/* Optional FormSubmit settings */}
+            <input
+              type="hidden"
+              name="_subject"
+              value="New Portfolio Contact"
+            />
+            <input type="hidden" name="_captcha" value="false" />
+
             <div className="space-y-5">
               {[
                 { id: "name", label: "Name", type: "text" },
@@ -73,13 +128,17 @@ export function Contact() {
                   >
                     {field.label}
                   </label>
+
                   <input
                     id={field.id}
+                    name={field.id}
                     type={field.type}
+                    required
                     className="mt-2 w-full border-b-2 border-[var(--color-ink)] bg-transparent py-2 outline-none focus:border-[var(--color-coral)]"
                   />
                 </div>
               ))}
+
               <div>
                 <label
                   htmlFor="message"
@@ -87,17 +146,22 @@ export function Contact() {
                 >
                   Message
                 </label>
+
                 <textarea
                   id="message"
+                  name="message"
                   rows={4}
+                  required
                   className="mt-2 w-full resize-none border-b-2 border-[var(--color-ink)] bg-transparent py-2 outline-none focus:border-[var(--color-coral)]"
                 />
               </div>
+
               <button
                 type="submit"
-                className="brutal-border brutal-shadow w-full bg-[var(--color-lime)] py-4 font-mono text-sm font-bold uppercase tracking-wider transition"
+                disabled={loading}
+                className="brutal-border brutal-shadow w-full bg-[var(--color-lime)] py-4 font-mono text-sm font-bold uppercase tracking-wider transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-x-0 disabled:hover:translate-y-0"
               >
-                Send message →
+                {loading ? "Sending..." : "Send message →"}
               </button>
             </div>
           </motion.form>

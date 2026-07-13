@@ -8,6 +8,7 @@ import { Projects } from "./components/Projects";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 import { ProjectDetail } from "./components/ProjectDetail";
+import { Toaster } from "react-hot-toast";
 
 function scrollToPosition(targetTop: number, duration = 1200) {
   const startTop = window.scrollY;
@@ -74,6 +75,32 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/projects/:slug" element={<ProjectDetail />} />
         </Routes>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              border: "2px solid #111827",
+              borderRadius: "0px",
+              background: "#fff",
+              color: "#111827",
+              fontFamily: "monospace",
+              boxShadow: "6px 6px 0 #111827",
+            },
+            success: {
+              iconTheme: {
+                primary: "#22c55e",
+                secondary: "#fff",
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: "#ef4444",
+                secondary: "#fff",
+              },
+            },
+          }}
+        />
       </main>
       <Footer />
     </div>
