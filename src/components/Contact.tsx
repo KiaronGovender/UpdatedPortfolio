@@ -27,7 +27,7 @@ export function Contact() {
 
       const data = await response.json();
 
-      if (data.success === "true") {
+      if (data.success) {
         toast.success("Message sent successfully!");
         form.reset();
       } else {
@@ -106,7 +106,9 @@ export function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="brutal-border brutal-shadow bg-white p-8"
-            onSubmit={handleSubmit}
+            //onSubmit={handleSubmit}
+            action="https://formsubmit.co/kiagov02@gmail.com"
+            method="POST"
           >
             {/* Optional FormSubmit settings */}
             <input
