@@ -1,0 +1,17 @@
+services:
+  app:
+    build: ./api
+    depends_on: [mysql]
+  nginx:
+    image: nginx:alpine
+    ports: ["8082:80"]
+    depends_on: [app]
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: infraguard
+      MYSQL_ROOT_PASSWORD: root
+    ports: ["3308:3306"]
+  nextjs:
+    build: ./frontend
+    ports: ["3002:3000"]

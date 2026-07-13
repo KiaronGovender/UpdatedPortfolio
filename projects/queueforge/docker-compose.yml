@@ -1,0 +1,25 @@
+services:
+  app:
+    build: ./api
+    depends_on: [mysql, redis, python-service]
+    environment:
+      QUEUE_CONNECTION: redis
+      REDIS_HOST: redis
+
+  python-service:
+    build: ./python-service
+    ports: ["5000:5000"]
+
+  redis:
+    image: redis:7-alpine
+
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: queueforge
+      MYSQL_ROOT_PASSWORD: root
+    ports: ["3310:3306"]
+
+  nextjs:
+    build: ./frontend
+    ports: ["3004:3000"]

@@ -1,0 +1,18 @@
+services:
+  app:
+    build: ./api
+    volumes:
+      - encrypted_storage:/var/www/storage/encrypted
+    depends_on: [mysql]
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: docuvault
+      MYSQL_ROOT_PASSWORD: root
+    ports: ["3309:3306"]
+  nextjs:
+    build: ./frontend
+    ports: ["3003:3000"]
+
+volumes:
+  encrypted_storage:

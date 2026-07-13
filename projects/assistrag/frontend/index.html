@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AssistRAG</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Inter, Arial, sans-serif;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0f172a, #111827);
+        color: #f8fafc;
+        display: grid;
+        place-items: center;
+      }
+      .card {
+        width: min(92vw, 760px);
+        background: rgba(15, 23, 42, 0.95);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 24px;
+        padding: 2rem;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+      }
+      h1 { margin-top: 0; }
+      .chat { display: flex; flex-direction: column; gap: 0.75rem; }
+      .bubble {
+        padding: 0.9rem 1rem;
+        border-radius: 12px;
+        background: #1e293b;
+        line-height: 1.45;
+      }
+      form {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 1rem;
+      }
+      input {
+        flex: 1;
+        padding: 0.85rem 1rem;
+        border: 1px solid #334155;
+        border-radius: 999px;
+        background: #020617;
+        color: #f8fafc;
+      }
+      button {
+        padding: 0.85rem 1.15rem;
+        border: none;
+        border-radius: 999px;
+        background: #38bdf8;
+        color: #082f49;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .status { font-size: 0.9rem; color: #94a3b8; margin-top: 0.5rem; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>AssistRAG</h1>
+      <p>A polished local demo for testing a chat experience with a small Flask backend.</p>
+      <div class="chat" id="chat"></div>
+      <form id="chat-form">
+        <input id="message" type="text" placeholder="Type a message..." autocomplete="off" />
+        <button type="submit">Send</button>
+      </form>
+      <div class="status" id="status">Connected to the local AssistRAG frontend.</div>
+    </div>
+
+    <script>
+      const chat = document.getElementById('chat');
+      const form = document.getElementById('chat-form');
+      const input = document.getElementById('message');
+      const status = document.getElementById('status');
+
+      function addBubble(text, role) {
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        bubble.textContent = text;
+        bubble.style.alignSelf = role === 'assistant' ? 'flex-start' : 'flex-end';
+        bubble.style.background = role === 'assistant' ? '#1e293b' : '#0f766e';
+        chat.appendChild(bubble);
+      }
+
+      addBubble('Hello! I am your local AssistRAG assistant. Ask me anything.', 'assistant');
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const messageText = input.value.trim();
+        if (!messageText) return;
+
+        addBubble(messageText, 'user');
+        input.value = '';
+        status.textContent = 'Sending message...';
+
+        try {
+          const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: messageText })
+          });
+          const data = await response.json();
+          addBubble(data.reply || 'No response received.', 'assistant');
+          status.textContent = 'Message received from the backend.';
+        } catch (error) {
+          addBubble('The request failed. Please check the backend container.', 'assistant');
+          status.textContent = 'Connection error.';
+        }
+      });
+    </script>
+  </body>
+</html>
