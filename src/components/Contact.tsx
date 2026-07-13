@@ -106,9 +106,7 @@ export function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="brutal-border brutal-shadow bg-white p-8"
-            //onSubmit={handleSubmit}
-            action="https://formsubmit.co/kiagov02@gmail.com"
-            method="POST"
+            onSubmit={handleSubmit}
           >
             {/* Optional FormSubmit settings */}
             <input
