@@ -92,7 +92,7 @@ export const projects: Project[] = [
       "GitHub Actions → container build → Google Artifact Registry → Cloud Run",
     ],
 
-    repoPath: "https://github.com/KiaronGovender/incident-response-platform",
+    repoPath: "incident-response-platform",
   },
   {
     id: "02",
@@ -158,7 +158,7 @@ export const projects: Project[] = [
       "Social interactions → relational database models → personalized feed",
     ],
 
-    repoPath: "https://github.com/KiaronGovender/Chirp",
+    repoPath: "Chirp",
   },
   {
     id: "03",
@@ -221,7 +221,7 @@ export const projects: Project[] = [
       "Reconciliation result → MySQL → Next.js analyst dashboard",
     ],
 
-    repoPath: "https://github.com/KiaronGovender/Payflow-Lite",
+    repoPath: "Payflow-Lite",
   },
   {
     id: "04",
@@ -294,7 +294,7 @@ export const projects: Project[] = [
       "Resume + job description → LLM analysis → ATS/recruiter scores + recommendations",
     ],
 
-    repoPath: "https://github.com/KiaronGovender/Ai-Resume-Analyzer",
+    repoPath: "Ai-Resume-Analyzer",
   },
   {
     id: "05",
@@ -350,8 +350,7 @@ export const projects: Project[] = [
       "Stock operation → inventory update → stock movement history",
     ],
 
-    repoPath:
-      "https://github.com/KiaronGovender/Inventory-Stock-Management-System",
+    repoPath: "Inventory-Stock-Management-System",
   },
 ];
 

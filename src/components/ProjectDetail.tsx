@@ -170,7 +170,7 @@ export function ProjectDetail() {
               </code>
             </span>
             <a
-              href={`https://github.com/yourusername/portfolio/tree/main/${project.repoPath}`}
+              href={`https://github.com/KiaronGovender/${project.repoPath}`}
               target="_blank"
               rel="noopener noreferrer"
               className="brutal-border bg-[var(--color-lime)] px-5 py-2 font-mono text-xs font-bold uppercase tracking-wider text-[var(--color-ink)]"
