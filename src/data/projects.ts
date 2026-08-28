@@ -5,13 +5,7 @@ export interface Project {
   tagline: string;
   description: string;
   longDescription: string;
-  category:
-    | "fintech"
-    | "insurance"
-    | "devops"
-    | "security"
-    | "integration"
-    | "ai";
+  category: "fintech" | "devops" | "ai" | "fullstack";
   status: "completed" | "in-progress";
   featured: boolean;
   accentColor: string;
@@ -27,317 +21,398 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: "01",
+    slug: "autonomous-production-incident-response-platform",
+    title: "Autonomous Production Incident Response Platform",
+    tagline:
+      "AI-powered incident detection, investigation, and remediation platform",
+
+    description:
+      "Full-stack AI SRE platform that simulates production incidents and automates the detect-investigate-remediate lifecycle across application services.",
+
+    longDescription:
+      "The Autonomous Production Incident Response Platform is a full-stack AI-powered SRE system designed to simulate how modern engineering teams detect, investigate, and recover from production incidents. The platform generates realistic service failures, collects application telemetry and events, runs autonomous investigations across logs, metrics, deployment history, service dependencies, and database health, and ranks competing root-cause hypotheses. Investigation workflows can trigger approval-gated remediation actions such as service restarts, rollbacks, and failover operations, followed by automated recovery verification. The platform includes a Next.js incident command dashboard and a FastAPI backend deployed to Google Cloud Run through GitHub Actions CI/CD.",
+
+    category: "devops",
+    status: "completed",
+    featured: true,
+    accentColor: "#0078d4",
+
+    tech: [
+      "Python",
+      "FastAPI",
+      "SQLModel",
+      "PostgreSQL",
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Docker",
+      "GitHub Actions",
+    ],
+
+    infrastructure: [
+      "Docker",
+      "Google Cloud Run",
+      "Google Artifact Registry",
+      "GitHub Actions CI/CD",
+      "Google Cloud Workload Identity Federation",
+    ],
+
+    highlights: [
+      "Built a full-stack incident management platform covering detection, investigation, remediation, and recovery verification",
+      "Implemented autonomous investigation workflows using diagnostic tools across logs, metrics, deployments, service dependencies, and database health",
+      "Implemented root-cause hypothesis ranking with confidence scoring",
+      "Added realistic incident simulation scenarios covering multiple production failure modes",
+      "Built approval-gated remediation workflows for rollback, restart, and failover actions",
+      "Developed an incident command dashboard for service topology, telemetry, investigation traces, hypotheses, remediation, and timelines",
+      "Added automated testing across API, incident detection, simulation, investigation, RAG, agent, remediation, and end-to-end workflows",
+      "Implemented CI/CD with GitHub Actions and deployed the application to Google Cloud Run",
+    ],
+
+    challenges: [
+      {
+        problem:
+          "Production incidents can involve multiple possible causes across different services and infrastructure signals.",
+        solution:
+          "Built an autonomous investigation workflow that gathers evidence from multiple diagnostic sources and evaluates competing root-cause hypotheses before recommending remediation.",
+      },
+      {
+        problem:
+          "Automated remediation can create additional risk if actions are executed without verification or human oversight.",
+        solution:
+          "Implemented approval-gated remediation workflows followed by automated recovery verification.",
+      },
+    ],
+
+    architecture: [
+      "Next.js incident command dashboard → FastAPI REST API → PostgreSQL",
+      "Incident simulator → events + telemetry → detection and investigation engine",
+      "Investigation agent → diagnostic tools → evidence collection → hypothesis ranking",
+      "Approved remediation → recovery action → automated verification",
+      "GitHub Actions → container build → Google Artifact Registry → Cloud Run",
+    ],
+
+    repoPath: "projects/autonomous-production-incident-response-platform",
+  },
+  {
+    id: "02",
+    slug: "chirp",
+    title: "Chirp",
+    tagline: "Full-stack social media platform built with Laravel and React",
+
+    description:
+      "Twitter-style social platform supporting posts, replies, likes, retweets, bookmarks, follows, notifications, messaging, profiles, and content discovery.",
+
+    longDescription:
+      "Chirp is a full-stack social media application built with Laravel and React using Inertia.js. The platform provides authenticated user accounts, social feeds, posts and replies, likes, retweets, bookmarks, following, notifications, user profiles, direct messaging, search, and content discovery. The project also includes application-level services, database relationships, validation, automated testing, static analysis, linting, formatting, and TypeScript checking.",
+
+    category: "fullstack",
+    status: "completed",
+    featured: true,
+    accentColor: "#10b981",
+
+    tech: [
+      "Laravel",
+      "PHP",
+      "React",
+      "TypeScript",
+      "Inertia.js",
+      "Tailwind CSS",
+      "Eloquent ORM",
+      "SQLite",
+      "Pest",
+      "PHPStan",
+    ],
+
+    infrastructure: ["Vite", "Composer", "npm", "Git", "GitHub"],
+
+    highlights: [
+      "Built a complete social media platform with authenticated user accounts and personalized feeds",
+      "Implemented posts, replies, likes, retweets, bookmarks, follows, and notifications",
+      "Developed direct messaging and conversation functionality",
+      "Implemented user profiles, search, trending content, and discovery functionality",
+      "Used Laravel services and Eloquent relationships to structure application logic and data access",
+      "Implemented automated testing with Pest",
+      "Added static analysis with PHPStan/Larastan",
+      "Added frontend linting, formatting, and TypeScript validation",
+    ],
+
+    challenges: [
+      {
+        problem:
+          "A social platform requires different interaction states depending on the authenticated user.",
+        solution:
+          "Implemented user-specific interaction state for actions such as likes, retweets, bookmarks, and follows while keeping feed responses consistent.",
+      },
+      {
+        problem:
+          "Timeline and discovery queries can become expensive as the amount of social content increases.",
+        solution:
+          "Structured timeline and discovery logic into dedicated application services and used pagination to control the amount of data returned to the frontend.",
+      },
+    ],
+
+    architecture: [
+      "React + Inertia frontend → Laravel controllers and services → Eloquent ORM",
+      "Laravel authentication → protected application routes → user-specific resources",
+      "Social interactions → relational database models → personalized feed",
+    ],
+
+    repoPath: "projects/chirp",
+  },
+  {
+    id: "03",
     slug: "payflow-lite",
     title: "PayFlow Lite",
     tagline: "Payment reconciliation API with queued event processing",
+
     description:
-      "Laravel API that matches bank deposits to merchant transactions via Redis queues — a fintech reconciliation pattern used in banking systems.",
+      "Fintech reconciliation platform that processes payment events through Redis-backed queues and matches deposits against merchant transactions.",
+
     longDescription:
-      "PayFlow Lite is a full-stack reconciliation system: a Next.js dashboard for analysts and a Laravel API that ingests payment events, processes them through Redis-backed queues, and persists matches to MySQL. Idempotency keys prevent duplicate counting on retries. Docker Compose spins up the entire stack — nginx, PHP-FPM, MySQL, Redis, and the Next.js frontend — in one command.",
+      "PayFlow Lite is a full-stack payment reconciliation system consisting of a Laravel API and Next.js dashboard. Payment events are ingested through the API and processed asynchronously through Redis-backed queues before being matched against merchant transactions stored in MySQL. Idempotency keys prevent duplicate processing when events are retried. The platform includes a dashboard for monitoring reconciliation results and reviewing mismatches.",
+
     category: "fintech",
     status: "completed",
     featured: true,
     accentColor: "#0078d4",
-    tech: ["Next.js", "Laravel 11", "MySQL", "Redis", "Docker", "PHPUnit"],
-    infrastructure: [
-      "Docker Compose",
-      "Azure Container Apps",
-      "Azure Database for MySQL",
-      "Azure Cache for Redis",
-    ],
-    highlights: [
-      "Laravel queue workers with idempotent reconciliation jobs and dead-letter handling",
-      "Next.js dashboard with real-time mismatch table and filtering",
-      "MySQL schema with indexed reference lookups and audit trail table",
-      "Full Docker Compose setup — reproducible dev environment in under 2 minutes",
-    ],
-    challenges: [
-      {
-        problem:
-          "Queue retries could double-count transactions on failure recovery.",
-        solution:
-          "Idempotency keys stored in MySQL with unique constraints — Laravel jobs check before processing.",
-      },
-      {
-        problem:
-          "Matching rules differed per merchant and lived hardcoded in controllers.",
-        solution:
-          "Extracted rules to JSON config files loaded via Laravel config cache — update without redeploy.",
-      },
-    ],
-    architecture: [
-      "Next.js dashboard → Laravel REST API → MySQL (transactions + deposits)",
-      "Payment events → Redis queue → Laravel queue worker (match engine)",
-      "Mismatch records → API endpoint → Next.js analyst review UI",
-    ],
-    repoPath: "projects/payflow-lite",
-    metrics: [
-      { label: "API routes", value: "12" },
-      { label: "Test coverage", value: "84%" },
-      { label: "Docker services", value: "5" },
-    ],
-  },
-  {
-    id: "02",
-    slug: "claimstrack",
-    title: "ClaimsTrack",
-    tagline: "Insurance claims lifecycle with document uploads",
-    description:
-      "End-to-end claims workflow — submit, review, approve/deny — built with Laravel state machines, MySQL audit logs, and a Next.js portal.",
-    longDescription:
-      "ClaimsTrack models how insurers process claims daily. Policyholders use a Next.js portal to submit motor or home claims with document uploads stored via Laravel filesystem (local dev, Azure Blob in production). A Laravel API enforces valid state transitions through a dedicated state machine class, logging every change to a MySQL audit table. Role-based middleware separates claimant, adjuster, and admin access.",
-    category: "insurance",
-    status: "completed",
-    featured: true,
-    accentColor: "#10b981",
-    tech: ["Next.js", "Laravel 11", "MySQL", "Sanctum", "Docker", "Pest PHP"],
-    infrastructure: [
-      "Docker Compose",
-      "Azure App Service",
-      "Azure Blob Storage",
-      "Azure Database for MySQL",
-    ],
-    highlights: [
-      "Laravel state machine class with enforced transition rules and audit logging",
-      "Chunked file uploads with validation via Laravel Form Requests",
-      "Sanctum token auth between Next.js frontend and Laravel API",
-      "Pest PHP tests covering every valid and invalid state transition",
-    ],
-    challenges: [
-      {
-        problem:
-          "Motor and home claims needed different fields on the same endpoint.",
-        solution:
-          "Polymorphic MySQL schema — shared claims table with JSON metadata column for product-specific fields.",
-      },
-      {
-        problem: "Large PDF uploads timed out behind nginx.",
-        solution:
-          "Adjusted Docker nginx client_max_body_size and Laravel chunked upload with progress events.",
-      },
-    ],
-    architecture: [
-      "Next.js portal → Laravel API (Sanctum auth) → MySQL",
-      "Documents → Laravel Storage → local / Azure Blob",
-      "State transitions → ClaimStateMachine → audit_log table",
-    ],
-    repoPath: "projects/claimstrack",
-    metrics: [
-      { label: "API endpoints", value: "18" },
-      { label: "Pest tests", value: "24" },
-      { label: "Claim states", value: "5" },
-    ],
-  },
-  {
-    id: "03",
-    slug: "infraguard",
-    title: "InfraGuard",
-    tagline: "Infrastructure health dashboard with Dockerised monitoring stack",
-    description:
-      "Next.js ops dashboard backed by a Laravel API that aggregates server metrics, cost trends, and alert history from MySQL.",
-    longDescription:
-      "InfraGuard gives small teams a single pane of glass for infrastructure health. A Laravel scheduler command polls Docker container stats and writes metrics to MySQL. The Next.js dashboard visualises uptime, memory usage, and cost anomalies with Recharts. Everything runs in Docker Compose — mirroring how modern engineering teams containerise services for enterprise clients deploying to Azure Container Apps.",
-    category: "devops",
-    status: "completed",
-    featured: true,
-    accentColor: "#8b5cf6",
+
     tech: [
+      "Laravel",
+      "PHP",
       "Next.js",
-      "Laravel 11",
+      "React",
       "MySQL",
+      "Redis",
       "Docker",
-      "Recharts",
-      "GitHub Actions",
+      "PHPUnit",
     ],
-    infrastructure: [
-      "Docker Compose",
-      "Azure Container Apps",
-      "Azure Monitor",
-      "GitHub Actions CI/CD",
-    ],
+
+    infrastructure: ["Docker Compose", "Redis", "MySQL", "GitHub Actions"],
+
     highlights: [
-      "Laravel scheduled commands collect and aggregate container metrics into MySQL",
-      "Cost anomaly detection using 7-day rolling average SQL window functions",
-      "Next.js dashboard with uptime charts and alert feed",
-      "GitHub Actions pipeline: test → build Docker images → push to registry",
+      "Built a Laravel REST API for ingesting and reconciling payment events",
+      "Implemented Redis-backed asynchronous queue processing",
+      "Used idempotency keys to prevent duplicate transaction processing during retries",
+      "Built a Next.js dashboard for monitoring payment mismatches and reconciliation results",
+      "Designed relational data models for transactions, deposits, reconciliation records, and audit information",
+      "Containerized the application stack with Docker Compose",
+      "Added automated backend testing",
     ],
+
     challenges: [
       {
-        problem: "Raw metrics table grew too fast for dashboard queries.",
+        problem:
+          "Retrying a failed payment event could result in the same transaction being processed more than once.",
         solution:
-          "Laravel artisan command aggregates hourly rollups — dashboard reads summary table only.",
+          "Implemented idempotency keys and database constraints so previously processed events could safely be retried without duplicate reconciliation.",
       },
       {
         problem:
-          "Docker stats varied between dev (Compose) and prod (Container Apps).",
+          "Payment processing should not block the API while potentially expensive reconciliation work is performed.",
         solution:
-          "Abstracted metric collector behind a Laravel interface — swap Docker/Azure implementation per env.",
+          "Moved reconciliation processing into Redis-backed Laravel queue workers so API requests could return without waiting for background processing to complete.",
       },
     ],
+
     architecture: [
-      "Laravel scheduler → metric collector → MySQL (raw + hourly rollup)",
-      "Next.js dashboard → Laravel API → aggregated metrics + alerts",
-      "GitHub Actions → Docker build → Azure Container Registry → Container Apps",
+      "Next.js dashboard → Laravel REST API → MySQL",
+      "Payment event → Laravel API → Redis queue → Laravel worker → reconciliation engine",
+      "Reconciliation result → MySQL → Next.js analyst dashboard",
     ],
-    repoPath: "projects/infraguard",
-    metrics: [
-      { label: "Containers monitored", value: "8" },
-      { label: "Alert rules", value: "12" },
-      { label: "CI pipeline steps", value: "6" },
-    ],
+
+    repoPath: "projects/payflow-lite",
   },
   {
     id: "04",
-    slug: "docuvault",
-    title: "DocuVault",
-    tagline: "Encrypted document vault with access audit trail",
+    slug: "ai-resume-analyzer",
+    title: "AI Resume Analyzer",
+    tagline: "AI-powered resume and job description analysis platform",
+
     description:
-      "Secure document storage — Laravel handles encryption and access control, MySQL logs every action, Next.js provides the upload portal.",
+      "AI application that evaluates resumes against job descriptions using document parsing, web scraping, LLM analysis, ATS scoring, keyword matching, and recruiter-focused recommendations.",
+
     longDescription:
-      "DocuVault demonstrates security-first document handling for banking and insurance contexts. Files are encrypted server-side using Laravel's encryption helpers before storage. Access tokens are time-limited via Laravel Sanctum abilities. Every upload, download, and delete is recorded in a MySQL audit table. Docker Compose packages PHP, MySQL, and Next.js for a consistent security testing environment.",
-    category: "security",
+      "AI Resume Analyzer is a full-stack AI application that evaluates a candidate's resume against a target job description. The application supports PDF, DOCX, and TXT resume parsing, job-description extraction from URLs, ATS-style keyword analysis, recruiter scoring, role detection, and an AI-generated improvement plan. A React/Vite frontend communicates with a Flask backend, which processes documents and uses the Groq API with Llama 3.3 for analysis.",
+
+    category: "ai",
     status: "completed",
-    featured: false,
-    accentColor: "#f59e0b",
-    tech: ["Next.js", "Laravel 11", "MySQL", "Sanctum", "Docker", "PHPUnit"],
+    featured: true,
+    accentColor: "#06b6d4",
+
+    tech: [
+      "Python",
+      "Flask",
+      "React",
+      "JavaScript",
+      "Vite",
+      "Tailwind CSS",
+      "Groq",
+      "Llama 3.3",
+      "BeautifulSoup",
+      "PDFMiner",
+      "python-docx",
+    ],
+
     infrastructure: [
-      "Docker Compose",
-      "Azure Key Vault",
-      "Azure Blob Storage",
-      "Azure App Service",
+      "Python virtual environment",
+      "REST API",
+      "Vite",
+      "Groq API",
     ],
+
     highlights: [
-      "Laravel encrypt/decrypt with per-document keys stored separately from ciphertext",
-      "Sanctum token abilities restrict download access to 15-minute windows",
-      "MySQL audit_log table — immutable append-only access records",
-      "Docker Compose with separate volumes for encrypted storage isolation",
+      "Built an AI-powered resume evaluation pipeline using Llama 3.3 through the Groq API",
+      "Implemented PDF, DOCX, and TXT resume text extraction",
+      "Built job-description extraction from public URLs using requests and BeautifulSoup",
+      "Implemented ATS-style scoring and recruiter-focused scoring",
+      "Added keyword matching to identify strengths and missing job requirements",
+      "Implemented role-adaptive evaluation so scoring criteria can change based on the target position",
+      "Generated prioritized recommendations for improving resume alignment",
+      "Built a React frontend for uploading resumes and reviewing analysis results",
     ],
+
     challenges: [
       {
         problem:
-          "Key rotation required re-encrypting thousands of existing documents.",
+          "Different jobs require different skills and evaluation criteria, making a single fixed scoring model unreliable.",
         solution:
-          "Versioned encryption keys in Laravel config — decrypt with old, re-encrypt with new via artisan command.",
+          "Implemented role detection and role-adaptive evaluation criteria so the analysis can account for the requirements and seniority of the target position.",
       },
       {
-        problem: "Audit log queries slowed as records accumulated.",
+        problem:
+          "Job descriptions are often hosted on different websites and use inconsistent page structures.",
         solution:
-          "MySQL partitioning by month on audit_log + indexed composite (document_id, created_at).",
+          "Built a scraping pipeline that attempts structured JobPosting data and multiple common HTML patterns before falling back to cleaned page content.",
       },
     ],
+
     architecture: [
-      "Next.js upload portal → Laravel API → encrypted storage volume",
-      "Encryption keys → Laravel config / Azure Key Vault in production",
-      "All access events → MySQL audit_log → admin compliance view",
+      "React/Vite frontend → Flask REST API",
+      "Resume upload → document parser → extracted resume text",
+      "Job URL → scraper → extracted job description",
+      "Resume + job description → LLM analysis → ATS/recruiter scores + recommendations",
     ],
-    repoPath: "projects/docuvault",
-    metrics: [
-      { label: "Encryption", value: "AES-256-CBC" },
-      { label: "Audit coverage", value: "100%" },
-      { label: "Token TTL", value: "15 min" },
-    ],
+
+    repoPath: "projects/ai-resume-analyzer",
   },
   {
     id: "05",
-    slug: "queueforge",
-    title: "QueueForge",
-    tagline: "Background job orchestrator with live progress tracking",
+    slug: "inventory-stock-management-system",
+    title: "Inventory & Stock Management System",
+    tagline: "Role-based inventory management and stock tracking platform",
+
     description:
-      "Laravel queue system for long-running report jobs — batch processing, retries, and a Next.js dashboard showing live job progress.",
+      "Business application for managing inventory, stock movements, low-stock alerts, reporting, and role-based administrator and staff access.",
+
     longDescription:
-      "QueueForge handles async workloads every enterprise needs: PDF report generation, CSV exports, batch data validation. Laravel queues (Redis driver) orchestrate multi-step jobs with retry logic and failure handling. A Python sidecar script handles heavy PDF rendering. The Next.js dashboard polls Laravel API for job status and displays a live progress bar — a common integration pattern across client-facing platforms.",
-    category: "integration",
+      "A Laravel-based inventory management system designed around real-world stock control workflows. The application provides role-based access, product management, stock tracking, stock movement history, low-stock alerts, search and filtering, reporting, and dashboard statistics. It uses Laravel's Eloquent ORM and relational database features to model inventory and stock relationships.",
+
+    category: "fullstack",
     status: "completed",
     featured: false,
-    accentColor: "#f43f5e",
-    tech: ["Next.js", "Laravel 11", "MySQL", "Redis", "Python", "Docker"],
-    infrastructure: [
-      "Docker Compose",
-      "Azure Container Apps",
-      "Azure Cache for Redis",
-      "Azure Blob Storage",
+    accentColor: "#8b5cf6",
+
+    tech: [
+      "Laravel",
+      "PHP",
+      "MySQL",
+      "Eloquent ORM",
+      "REST APIs",
+      "Authentication",
+      "Blade",
     ],
+
+    infrastructure: ["Laravel", "MySQL", "Git", "GitHub"],
+
     highlights: [
-      "Laravel job chains: fetch → transform → render (Python) → store",
-      "Exponential backoff retry policy with max 5 attempts and failed_jobs table",
-      "Python Flask microservice for PDF generation called via HTTP from Laravel jobs",
-      "Next.js dashboard with polling-based live progress and job history",
+      "Implemented role-based administrator and staff access",
+      "Built inventory CRUD functionality and database migrations",
+      "Implemented stock tracking and stock movement history",
+      "Added low-stock alerts and dashboard statistics",
+      "Implemented search and filtering for inventory records",
+      "Used Eloquent relationships to model inventory data",
+      "Implemented validation and protected application routes",
     ],
+
     challenges: [
       {
-        problem: "PDF rendering blocked PHP queue workers for 30+ seconds.",
+        problem:
+          "Inventory changes need to remain traceable rather than simply overwriting the current stock value.",
         solution:
-          "Extracted rendering to a Python sidecar — Laravel job sends HTTP request, polls for completion.",
-      },
-      {
-        problem: "Users had no visibility into 10-minute batch jobs.",
-        solution:
-          "Jobs update a MySQL job_progress table at each step — Next.js polls every 2 seconds.",
+          "Implemented stock movement tracking so inventory changes could be recorded and reviewed as part of the application's workflow.",
       },
     ],
+
     architecture: [
-      "Next.js → Laravel API → Redis queue → queue worker",
-      "Report job → Python PDF service → Azure Blob / local storage",
-      "Job progress → MySQL → Next.js live dashboard",
+      "Laravel application → controllers → Eloquent models → MySQL",
+      "Authenticated user → role-based middleware → inventory functionality",
+      "Stock operation → inventory update → stock movement history",
     ],
-    repoPath: "projects/queueforge",
-    metrics: [
-      { label: "Job types", value: "4" },
-      { label: "Max retries", value: "5" },
-      { label: "Longest job tested", value: "11 min" },
-    ],
+
+    repoPath: "projects/inventory-stock-management-system",
   },
   {
     id: "06",
-    slug: "assistrag",
-    title: "AssistRAG",
+    slug: "pizza-delivery-app",
+    title: "Pizza Delivery Application",
     tagline:
-      "Knowledge assistant — Python RAG engine, Laravel gateway, Next.js chat",
+      "Full-stack food ordering platform with authentication and payments",
+
     description:
-      "Retrieval-augmented generation chatbot: Python handles embeddings and search, Laravel manages auth and rate limiting, Next.js delivers the chat UI.",
+      "MERN-based food ordering application with product management, authentication, image uploads, shopping cart functionality, and online payments.",
+
     longDescription:
-      "AssistRAG is a three-service architecture showcasing polyglot system design. A Python FastAPI service indexes markdown docs, generates embeddings, and performs hybrid retrieval. Laravel acts as the API gateway — handling Sanctum auth, rate limiting, and request logging to MySQL. The Next.js chat UI streams responses with source citations. All three services communicate over Docker's internal network, deployable to Azure Container Apps as separate containers.",
-    category: "ai",
-    status: "in-progress",
-    featured: true,
-    accentColor: "#06b6d4",
-    tech: ["Next.js", "Laravel 11", "Python", "FastAPI", "MySQL", "Docker"],
-    infrastructure: [
-      "Docker Compose",
-      "Azure OpenAI",
-      "Azure Container Apps",
-      "Azure Database for MySQL",
+      "A full-stack pizza delivery application built with React and Node.js. The application provides a customer-facing ordering experience backed by an Express REST API and MongoDB database. It includes authentication, product and order management, image uploads, cart functionality, and PayPal payment integration. The backend was containerized and deployed separately from the frontend.",
+
+    category: "fullstack",
+    status: "completed",
+    featured: false,
+    accentColor: "#f43f5e",
+
+    tech: [
+      "React",
+      "Vite",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "Mongoose",
+      "JWT",
+      "Multer",
+      "Redux Toolkit",
+      "PayPal",
     ],
+
+    infrastructure: ["Docker", "Render", "MongoDB Atlas", "GitHub"],
+
     highlights: [
-      "Python FastAPI RAG pipeline: chunk → embed → hybrid search → cited response",
-      "Laravel gateway with Sanctum auth, rate limiting, and conversation logging",
-      "Next.js streaming chat UI with clickable source citations",
-      "Confidence threshold — refuses to answer when retrieval score is below 0.7",
+      "Built a full-stack food ordering application using the MERN stack",
+      "Implemented JWT authentication and protected API routes",
+      "Built product and order management functionality",
+      "Implemented image uploads using Multer",
+      "Integrated PayPal for online payments",
+      "Used Redux Toolkit for client-side application state",
+      "Migrated the database from local MongoDB to MongoDB Atlas",
+      "Deployed the backend to Render",
     ],
+
     challenges: [
       {
-        problem: "Direct Python API exposure lacked auth and rate limiting.",
-        solution:
-          "Laravel API gateway proxies to Python — Sanctum tokens validated before forwarding.",
-      },
-      {
         problem:
-          "Re-embedding unchanged documents wasted Azure OpenAI credits.",
+          "Uploaded files stored on an ephemeral deployment environment can be lost when application instances restart.",
         solution:
-          "Python indexer stores content hashes in MySQL — skip embedding when hash unchanged.",
+          "Identified the limitation of local file storage on the deployment platform and separated persistent application data from the application runtime.",
       },
     ],
+
     architecture: [
-      "Next.js chat → Laravel gateway (auth + rate limit) → Python FastAPI (RAG)",
-      "Docs → Python indexer → embeddings → vector store / MySQL metadata",
-      "Conversation logs → MySQL via Laravel → admin analytics dashboard",
+      "React/Vite frontend → Express REST API",
+      "Express API → Mongoose → MongoDB Atlas",
+      "React state → Redux Toolkit → cart and application state",
+      "Customer checkout → PayPal payment integration",
     ],
-    repoPath: "projects/assistrag",
-    metrics: [
-      { label: "Indexed docs", value: "120+" },
-      { label: "Avg. latency", value: "2.3s" },
-      { label: "Services", value: "3" },
-    ],
+
+    repoPath: "projects/pizza-delivery-app",
   },
 ];
 
@@ -347,9 +422,7 @@ export function getProjectBySlug(slug: string): Project | undefined {
 
 export const categoryLabels: Record<Project["category"], string> = {
   fintech: "FinTech",
-  insurance: "Insurance",
   devops: "DevOps",
-  security: "Security",
-  integration: "Integration",
   ai: "AI & Data",
+  fullstack: "Full-Stack",
 };
