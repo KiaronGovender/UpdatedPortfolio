@@ -177,6 +177,18 @@ export function ProjectDetail() {
             >
               View repo →
             </a>
+            {project.deployed ? (
+              <a
+                href={project.deployedURL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="brutal-border bg-[var(--color-lime)] px-5 ml-0.5 py-2 font-mono text-xs font-bold uppercase tracking-wider text-[var(--color-ink)]"
+              >
+                View Live →
+              </a>
+            ) : (
+              <></>
+            )}
           </section>
         </div>
       </div>

@@ -15,6 +15,8 @@ export interface Project {
   challenges: { problem: string; solution: string }[];
   architecture: string[];
   repoPath: string;
+  deployed?: boolean;
+  deployedURL?: string;
   metrics?: { label: string; value: string }[];
 }
 
@@ -93,6 +95,9 @@ export const projects: Project[] = [
     ],
 
     repoPath: "incident-response-platform",
+    deployed: true,
+    deployedURL:
+      " https://incident-response-platform-1081677184050.europe-west1.run.app/",
   },
   {
     id: "02",
