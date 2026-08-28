@@ -92,7 +92,7 @@ export const projects: Project[] = [
       "GitHub Actions → container build → Google Artifact Registry → Cloud Run",
     ],
 
-    repoPath: "projects/autonomous-production-incident-response-platform",
+    repoPath: "https://github.com/KiaronGovender/incident-response-platform",
   },
   {
     id: "02",
@@ -158,7 +158,7 @@ export const projects: Project[] = [
       "Social interactions → relational database models → personalized feed",
     ],
 
-    repoPath: "projects/chirp",
+    repoPath: "https://github.com/KiaronGovender/Chirp",
   },
   {
     id: "03",
@@ -221,7 +221,7 @@ export const projects: Project[] = [
       "Reconciliation result → MySQL → Next.js analyst dashboard",
     ],
 
-    repoPath: "projects/payflow-lite",
+    repoPath: "https://github.com/KiaronGovender/Payflow-Lite",
   },
   {
     id: "04",
@@ -294,7 +294,7 @@ export const projects: Project[] = [
       "Resume + job description → LLM analysis → ATS/recruiter scores + recommendations",
     ],
 
-    repoPath: "projects/ai-resume-analyzer",
+    repoPath: "https://github.com/KiaronGovender/Ai-Resume-Analyzer",
   },
   {
     id: "05",
@@ -350,69 +350,8 @@ export const projects: Project[] = [
       "Stock operation → inventory update → stock movement history",
     ],
 
-    repoPath: "projects/inventory-stock-management-system",
-  },
-  {
-    id: "06",
-    slug: "pizza-delivery-app",
-    title: "Pizza Delivery Application",
-    tagline:
-      "Full-stack food ordering platform with authentication and payments",
-
-    description:
-      "MERN-based food ordering application with product management, authentication, image uploads, shopping cart functionality, and online payments.",
-
-    longDescription:
-      "A full-stack pizza delivery application built with React and Node.js. The application provides a customer-facing ordering experience backed by an Express REST API and MongoDB database. It includes authentication, product and order management, image uploads, cart functionality, and PayPal payment integration. The backend was containerized and deployed separately from the frontend.",
-
-    category: "fullstack",
-    status: "completed",
-    featured: false,
-    accentColor: "#f43f5e",
-
-    tech: [
-      "React",
-      "Vite",
-      "Node.js",
-      "Express.js",
-      "MongoDB",
-      "Mongoose",
-      "JWT",
-      "Multer",
-      "Redux Toolkit",
-      "PayPal",
-    ],
-
-    infrastructure: ["Docker", "Render", "MongoDB Atlas", "GitHub"],
-
-    highlights: [
-      "Built a full-stack food ordering application using the MERN stack",
-      "Implemented JWT authentication and protected API routes",
-      "Built product and order management functionality",
-      "Implemented image uploads using Multer",
-      "Integrated PayPal for online payments",
-      "Used Redux Toolkit for client-side application state",
-      "Migrated the database from local MongoDB to MongoDB Atlas",
-      "Deployed the backend to Render",
-    ],
-
-    challenges: [
-      {
-        problem:
-          "Uploaded files stored on an ephemeral deployment environment can be lost when application instances restart.",
-        solution:
-          "Identified the limitation of local file storage on the deployment platform and separated persistent application data from the application runtime.",
-      },
-    ],
-
-    architecture: [
-      "React/Vite frontend → Express REST API",
-      "Express API → Mongoose → MongoDB Atlas",
-      "React state → Redux Toolkit → cart and application state",
-      "Customer checkout → PayPal payment integration",
-    ],
-
-    repoPath: "projects/pizza-delivery-app",
+    repoPath:
+      "https://github.com/KiaronGovender/Inventory-Stock-Management-System",
   },
 ];
 
