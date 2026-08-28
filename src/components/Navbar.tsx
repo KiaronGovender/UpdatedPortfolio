@@ -50,7 +50,7 @@ export function Navbar() {
         </ul>
 
         <a
-          href="/contact"
+          href="/#contact"
           className="hidden brutal-border brutal-shadow bg-[var(--color-lime)] px-5 py-2 font-mono text-xs font-bold uppercase tracking-wider transition md:inline-block"
         >
           Hire me
